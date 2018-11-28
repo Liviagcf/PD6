@@ -1,4 +1,32 @@
 import numpy as np
+<<<<<<< HEAD
+import sys
+import cv2 
+
+ball_cascade = cv2.CascadeClassifier('train/cascade.xml')
+
+videoname = sys.argv[1]+'.avi'
+cap = cv2.VideoCapture(videoname)
+
+while(True):
+    ret, frame = cap.read()
+
+    if ret==False:
+    	break
+    
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    ball = ball_cascade.detectMultiScale(gray, 1.3, 5)
+
+    for (x,y,w,h) in ball:
+    	cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+
+    cv2.imshow('ball_detection',frame)
+
+    cv2.waitKey(0)
+    
+
+cv2.destroyAllWindows()
+=======
 import cv2 as cv
 
 
@@ -18,3 +46,4 @@ for (x,y,w,h) in faces:
 cv.imshow('img',img)
 cv.waitKey(0)
 cv.destroyAllWindows()
+>>>>>>> 276816daf656228588a8543dee08651f07ed2480

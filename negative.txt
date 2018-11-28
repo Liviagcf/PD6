@@ -1,0 +1,10 @@
+data/apartamento_iluminado_31.png
+data/apartamento_iluminado_32.png
+data/apartamento_iluminado_39.png
+data/apartamento_iluminado_43.png
+data/apartamento_iluminado_47.png
+data/apartamento_iluminado_129.png
+data/apartamento_iluminado_130.png
+data/apartamento_iluminado_131.png
+data/apartamento_iluminado_132.png
+data/apartamento_iluminado_133.png
