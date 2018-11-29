@@ -21,28 +21,32 @@ def click_and_drop(event, x, y, flags, param):
 	global refPt, cropping
 
 	if event == cv2.EVENT_LBUTTONDOWN:
-		refPt = [(x, y)]
+		refPt.insert(0,(x, y))
 		cropping = True
  
 	elif event == cv2.EVENT_LBUTTONUP:
-		refPt.append((x, y))
+		refPt.insert(1,(x, y))
 		cropping = False
- 
-		cv2.rectangle(frame, refPt[0], refPt[1], (0, 255, 0), 2)
-		cv2.imshow("cut", frame)
+ 		print(refPt[0][0])
+ 		print(refPt[0][1])
+ 		print(refPt[1][0])
+ 		print(refPt[1][1])
+		crop_img = gray[refPt[0][1]:refPt[1][1], refPt[0][0]:refPt[1][0]]
+
+		cv2.imshow("cut", crop_img)
 
 ################################## main #######################################
 videoname = sys.argv[1]+'.avi'
 cap = cv2.VideoCapture(videoname)
 
-file_positive = open("positive.info","w")
-file_negative = open("negative.txt","w")
+file_positive = open("positive.info","a+")
+file_negative = open("negative.txt","a+")
 
 i = 0
 
 while(True):
     ret, frame = cap.read()
-    refPt = []
+    refPt=[]
     i=i+1
 
     if ret==False:
@@ -53,28 +57,26 @@ while(True):
 
     imagename = sys.argv[1]+'_'+str(i)+'.png'
 
-    cv2.setMouseCallback('frame', click_and_drop, refPt) 
+    cv2.setMouseCallback('frame', click_and_drop) 
 
     option = cv2.waitKey(0)
 
     if option == ord('p'):
-    	print("positive")
+    	print("Positive")
     	cv2.imwrite(imagename, gray)
     	file_positive_line = imagename + ' ' + str(1) + ' ' + str(refPt[0][0]) + ' ' + str(refPt[0][1]) + ' ' + str(refPt[1][0]-refPt[0][0])+ ' ' + str(refPt[1][1]-refPt[0][1]) + '\n'
     	file_positive.write(file_positive_line)
     	cv2.destroyWindow("cut")
 
     elif option == ord('n'):
-    	print("negative")
+    	print("Negative")
     	cv2.imwrite(imagename, gray)
     	file_negative_line = imagename + '\n'
     	file_negative.write(file_negative_line)
 
 
-
 file_positive.close()
 file_negative.close()     
-
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
