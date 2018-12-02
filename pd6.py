@@ -51,8 +51,9 @@ while(True):
     blackMask = cv2.inRange(gray, 0, 100)
 
     for (x,y,w,h) in ball:
-    	cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-    	valid =  pixelCountCheck(0, 0, whiteMask, blackMask, (x,y),(x+w,y+h))
+    	valid =  pixelCountCheck(0.1, 0.1, whiteMask, blackMask, (x,y),(x+w,y+h))
+    	if valid:
+    		cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
 
 
     cv2.imshow('ball_detection',frame)
